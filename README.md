@@ -10,6 +10,8 @@ Emoji: `cheese_wedge`
 
 Text: `Cheesehead`
 
+Styling: First
+
 ## Extra info
 Cheesehead (me): 50% of the program
 
