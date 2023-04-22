@@ -17,7 +17,7 @@ Cheesehead (me): 50% of the program
 
 ChatGPT: The other 50% of the program
 
-Current version: 1.1
+Current version: 1.3
 
 ## TODO
 * [x] ~~Add the ability to paste from the windows emoji picker~~ Add the ability to type in the name of the emoji from the emoji library
