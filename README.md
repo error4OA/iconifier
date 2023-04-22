@@ -20,5 +20,5 @@ ChatGPT: The other 50% of the program
 Current version: 1.3
 
 ## TODO
-* [x] ~~Add the ability to paste from the windows emoji picker~~ Add the ability to type in the name of the emoji from the emoji library
+* [x] ~~Add the ability to paste from the windows emoji picker~~ Add the ability to type in the name of the emoji from the [emoji overview](https://carpedm20.github.io/emoji/ "See the emoji overview here!!)
 * [x] Make a (slightly) better UI
