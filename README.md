@@ -10,5 +10,5 @@ Cheesehead (me): 50% of the program
 ChatGPT: The other 50% of the program
 
 ## TODO
-* [ ] Add the ability to paste from the windows emoji picker
+* [x] ~~Add the ability to paste from the windows emoji picker~~ Add the ability to type in the name of the emoji from the emoji library
 * [ ] Make a better UI
