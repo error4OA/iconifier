@@ -4,6 +4,12 @@ An open-source python-pure program that allows text iconification!
 ## How to use?
 Open the EXE, insert an emoji's name, insert some text and voila!
 
+Example of usage:
+
+Emoji: `cheese_wedge`
+
+Text: `Cheesehead`
+
 ## Extra info
 Cheesehead (me): 50% of the program
 
