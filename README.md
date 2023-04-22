@@ -21,4 +21,4 @@ Current version: 1.3
 
 ## TODO
 * [x] ~~Add the ability to paste from the windows emoji picker~~ Add the ability to type in the name of the emoji from the emoji library
-* [ ] Make a better UI
+* [x] Make a (slightly) better UI
