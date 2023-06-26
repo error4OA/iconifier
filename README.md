@@ -20,7 +20,7 @@ ChatGPT: The other 50% of the program
 Current version: 1.3
 
 ## Screenshots
-![New and improved!](https://cdn.discordapp.com/attachments/925820527011045376/1122827617930854500/image.png)
+![New and improved!](https://cdn.discordapp.com/attachments/925820527011045376/1122827617930854500/image.png) ![Now with random styling!](https://cdn.discordapp.com/attachments/925820527011045376/1122831465873416212/image.png)
 
 ## TODO
 * [x] ~~Add the ability to paste from the windows emoji picker~~ Add the ability to type in the name of the emoji from the [emoji overview](https://carpedm20.github.io/emoji/ "See the emoji overview here!!")
