@@ -14,69 +14,87 @@ import emoji
 import clipboard
 import random
 
-
 class Ui_iconifier_main(object):
     def setupUi(self, iconifier_main):
         iconifier_main.setObjectName("iconifier_main")
         iconifier_main.setWindowModality(QtCore.Qt.NonModal)
         iconifier_main.setEnabled(True)
-        iconifier_main.setFixedSize(247, 294)
+        iconifier_main.setFixedSize(302, 294)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("./assets/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        iconifier_main.setWindowIcon(icon)
         self.generate = QtWidgets.QPushButton(iconifier_main)
-        self.generate.setGeometry(QtCore.QRect(20, 210, 75, 31))
+        self.generate.setGeometry(QtCore.QRect(110, 260, 75, 31))
         self.generate.setObjectName("generate")
         self.copy = QtWidgets.QPushButton(iconifier_main)
-        self.copy.setGeometry(QtCore.QRect(20, 260, 75, 31))
+        self.copy.setGeometry(QtCore.QRect(200, 260, 75, 31))
         self.copy.setObjectName("copy")
         self.styling = QtWidgets.QComboBox(iconifier_main)
-        self.styling.setGeometry(QtCore.QRect(80, 170, 71, 22))
+        self.styling.setGeometry(QtCore.QRect(110, 170, 71, 22))
         self.styling.setObjectName("styling")
         self.styling.addItem("")
         self.styling.addItem("")
         self.styling.addItem("")
         self.text = QtWidgets.QLineEdit(iconifier_main)
-        self.text.setGeometry(QtCore.QRect(60, 60, 113, 21))
+        self.text.setGeometry(QtCore.QRect(90, 60, 113, 21))
         self.text.setObjectName("text")
         self.emoji = QtWidgets.QLineEdit(iconifier_main)
         self.emoji.setEnabled(True)
-        self.emoji.setGeometry(QtCore.QRect(60, 20, 113, 21))
+        self.emoji.setGeometry(QtCore.QRect(90, 20, 113, 21))
         self.emoji.setReadOnly(False)
         self.emoji.setObjectName("emoji")
         self.randomIcon = QtWidgets.QCheckBox(iconifier_main)
-        self.randomIcon.setEnabled(False)
-        self.randomIcon.setGeometry(QtCore.QRect(60, 100, 131, 17))
+        self.randomIcon.setEnabled(True)
+        self.randomIcon.setGeometry(QtCore.QRect(90, 100, 131, 17))
         self.randomIcon.setObjectName("randomIcon")
         self.randomStyle = QtWidgets.QCheckBox(iconifier_main)
-        self.randomStyle.setGeometry(QtCore.QRect(60, 130, 121, 17))
+        self.randomStyle.setGeometry(QtCore.QRect(90, 130, 121, 17))
         self.randomStyle.setObjectName("randomStyle")
         self.result = QtWidgets.QLineEdit(iconifier_main)
         self.result.setEnabled(False)
-        self.result.setGeometry(QtCore.QRect(110, 240, 113, 20))
+        self.result.setGeometry(QtCore.QRect(62, 220, 171, 20))
         self.result.setReadOnly(False)
         self.result.setClearButtonEnabled(False)
         self.result.setObjectName("result")
+        self.clear = QtWidgets.QPushButton(iconifier_main)
+        self.clear.setGeometry(QtCore.QRect(20, 260, 75, 31))
+        self.clear.setObjectName("clear")
 
         self.retranslateUi(iconifier_main)
         QtCore.QMetaObject.connectSlotsByName(iconifier_main)
 
         self.generate.clicked.connect(self.iconify)
         self.randomStyle.stateChanged.connect(self.usesRandomStyling)
+        self.randomIcon.stateChanged.connect(self.usesRandomIcon)
         self.copy.clicked.connect(self.copyResult)
+        self.clear.clicked.connect(self.clearResult)
 
     def iconify(self):
         emojized = emoji.emojize(f":{self.emoji.text()}:", variant="emoji_type")
+        possibleStyles = ["「」", "〘〙", "  "]
+        possibleIcons = list(emoji.EMOJI_DATA.keys())
+        selectedStyle = random.choice(possibleStyles)
+        selectedIcon = random.choice(possibleIcons)
         selected = self.styling.currentText()
         if not self.randomStyle.isChecked():
             if selected == "(none)":
                 self.result.setText(f"{emojized} {self.text.text()}")
             else:
-                self.result.setText(f"{selected[0]}{emojized}{selected[1]} {self.text.text()}")
+                if not self.randomIcon.isChecked():
+                    self.result.setText(f"{selected[0]}{emojized}{selected[1]} {self.text.text()}")
+                else:
+                    self.result.setText(f"{selected[0]}{selectedIcon}{selected[1]} {self.text.text()}")
         else:
-            possibleStyles = ["「」", "〘〙", "  "]
-            selectedStyle = random.choice(possibleStyles)
-            self.result.setText(f"{selectedStyle[0]}{emojized}{selectedStyle[1]} {self.text.text()}")
+            if not self.randomIcon.isChecked():
+                self.result.setText(f"{selectedStyle[0]}{emojized}{selectedStyle[1]} {self.text.text()}")
+            else:
+                self.result.setText(f"{selectedStyle[0]}{selectedIcon}{selectedStyle[1]} {self.text.text()}")
 
     def usesRandomStyling(self, checked):
         self.styling.setDisabled(checked)
+
+    def usesRandomIcon(self, checked):
+        self.emoji.setEnabled(not checked)
 
     def copyResult(self):
         clipboard.copy(self.result.text())
@@ -86,6 +104,9 @@ class Ui_iconifier_main(object):
         message_box.setText("Copied to clipboard! Made by Cheesehead.")
         message_box.setStandardButtons(QMessageBox.Ok)
         message_box.exec_()
+
+    def clearResult(self):
+        self.result.clear()
 
     def retranslateUi(self, iconifier_main):
         _translate = QtCore.QCoreApplication.translate
@@ -102,6 +123,7 @@ class Ui_iconifier_main(object):
         self.randomIcon.setText(_translate("iconifier_main", "Use random icon (WIP)"))
         self.randomStyle.setText(_translate("iconifier_main", "Use random styling"))
         self.result.setPlaceholderText(_translate("iconifier_main", "result goes here"))
+        self.clear.setText(_translate("iconifier_main", "Clear output"))
 
 
 if __name__ == "__main__":

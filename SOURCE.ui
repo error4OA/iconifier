@@ -12,18 +12,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>247</width>
+    <width>302</width>
     <height>294</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Iconifier</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../Downloads/iconifer.png</normaloff>../../Downloads/iconifer.png</iconset>
+  </property>
   <widget class="QPushButton" name="generate">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>210</y>
+     <x>110</x>
+     <y>260</y>
      <width>75</width>
      <height>31</height>
     </rect>
@@ -35,7 +39,7 @@
   <widget class="QPushButton" name="copy">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>200</x>
      <y>260</y>
      <width>75</width>
      <height>31</height>
@@ -48,7 +52,7 @@
   <widget class="QComboBox" name="styling">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>110</x>
      <y>170</y>
      <width>71</width>
      <height>22</height>
@@ -79,7 +83,7 @@
   <widget class="QLineEdit" name="text">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>90</x>
      <y>60</y>
      <width>113</width>
      <height>21</height>
@@ -95,7 +99,7 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>90</x>
      <y>20</y>
      <width>113</width>
      <height>21</height>
@@ -110,11 +114,11 @@
   </widget>
   <widget class="QCheckBox" name="randomIcon">
    <property name="enabled">
-    <bool>false</bool>
+    <bool>true</bool>
    </property>
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>90</x>
      <y>100</y>
      <width>131</width>
      <height>17</height>
@@ -127,7 +131,7 @@
   <widget class="QCheckBox" name="randomStyle">
    <property name="geometry">
     <rect>
-     <x>60</x>
+     <x>90</x>
      <y>130</y>
      <width>121</width>
      <height>17</height>
@@ -143,9 +147,9 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>240</y>
-     <width>113</width>
+     <x>62</x>
+     <y>220</y>
+     <width>171</width>
      <height>20</height>
     </rect>
    </property>
@@ -157,6 +161,19 @@
    </property>
    <property name="clearButtonEnabled">
     <bool>false</bool>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="clear">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>260</y>
+     <width>75</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Clear output</string>
    </property>
   </widget>
  </widget>
