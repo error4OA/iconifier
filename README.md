@@ -17,7 +17,9 @@ Cheesehead (me): 50% of the program
 
 ChatGPT: The other 50% of the program
 
-Current version: 2.0
+Programmed Chip: The program's new icon
+
+Current version: 2.1
 
 ## Screenshots
 ![New and improved!](https://cdn.discordapp.com/attachments/925820527011045376/1122827617930854500/image.png "New and improved!") ![Now with random styling!](https://cdn.discordapp.com/attachments/925820527011045376/1122831465873416212/image.png "Now with random styling!")
