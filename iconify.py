@@ -13,6 +13,18 @@ from PyQt5.QtWidgets import QMessageBox
 import emoji
 import clipboard
 import random
+import requests
+
+lookalikes = requests.get("https://gist.githubusercontent.com/StevenACoffman/a5f6f682d94e38ed804182dc2693ed4b/raw/fa2ed09ab6f9b515ab430692b588540748412f5f/some_homoglyphs.json").json()
+leet_dict = {
+    'A': '4', 'a': '4', 'B': '8', 'b': '8', 'E': '3', 'e': '3', 'G': '6', 'g': '6', 'I': '1', 'i': '1',
+    'O': '0', 'o': '0', 'S': '5', 's': '5', 'T': '7', 't': '7', 'Z': '2', 'z': '2',
+    'C': '(', 'c': '(', 'D': '|)', 'd': '|)', 'F': '|=', 'f': '|=', 'H': '#', 'h': '#', 'K': '|<', 'k': '|<',
+    'L': '1', 'l': '1', 'M': '|\\/|', 'm': '|\\/|', 'N': '|\\|', 'n': '|\\|', 'P': '|*', 'p': '|*', 'Q': '(,)',
+    'q': '(,)', 'R': '|2', 'r': '|2', 'U': '|_|', 'u': '|_|', 'V': '\\/', 'v': '\\/', 'W': '\\/\\/', 'w': '\\/\\/',
+    'X': '><', 'x': '><', 'Y': '`/', 'y': '`/'
+}
+
 
 class Ui_iconifier_main(object):
     def setupUi(self, iconifier_main):
@@ -21,7 +33,7 @@ class Ui_iconifier_main(object):
         iconifier_main.setEnabled(True)
         iconifier_main.setFixedSize(302, 294)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("./assets/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("assets/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         iconifier_main.setWindowIcon(icon)
         self.generate = QtWidgets.QPushButton(iconifier_main)
         self.generate.setGeometry(QtCore.QRect(110, 260, 75, 31))
@@ -30,7 +42,7 @@ class Ui_iconifier_main(object):
         self.copy.setGeometry(QtCore.QRect(200, 260, 75, 31))
         self.copy.setObjectName("copy")
         self.styling = QtWidgets.QComboBox(iconifier_main)
-        self.styling.setGeometry(QtCore.QRect(110, 170, 71, 22))
+        self.styling.setGeometry(QtCore.QRect(50, 190, 71, 22))
         self.styling.setObjectName("styling")
         self.styling.addItem("")
         self.styling.addItem("")
@@ -48,7 +60,7 @@ class Ui_iconifier_main(object):
         self.randomIcon.setGeometry(QtCore.QRect(90, 100, 131, 17))
         self.randomIcon.setObjectName("randomIcon")
         self.randomStyle = QtWidgets.QCheckBox(iconifier_main)
-        self.randomStyle.setGeometry(QtCore.QRect(90, 130, 121, 17))
+        self.randomStyle.setGeometry(QtCore.QRect(20, 130, 121, 17))
         self.randomStyle.setObjectName("randomStyle")
         self.result = QtWidgets.QLineEdit(iconifier_main)
         self.result.setEnabled(False)
@@ -59,6 +71,22 @@ class Ui_iconifier_main(object):
         self.clear = QtWidgets.QPushButton(iconifier_main)
         self.clear.setGeometry(QtCore.QRect(20, 260, 75, 31))
         self.clear.setObjectName("clear")
+        self.textStyling = QtWidgets.QComboBox(iconifier_main)
+        self.textStyling.setGeometry(QtCore.QRect(190, 190, 71, 22))
+        self.textStyling.setObjectName("textStyling")
+        self.textStyling.addItem("")
+        self.textStyling.addItem("")
+        self.textStyling.addItem("")
+        self.styleType_label = QtWidgets.QLabel(iconifier_main)
+        self.styleType_label.setGeometry(QtCore.QRect(50, 170, 47, 13))
+        self.styleType_label.setObjectName("styleType_label")
+        self.textType_label = QtWidgets.QLabel(iconifier_main)
+        self.textType_label.setGeometry(QtCore.QRect(190, 170, 61, 16))
+        self.textType_label.setObjectName("textType_label")
+        self.randomStyle_2 = QtWidgets.QCheckBox(iconifier_main)
+        self.randomStyle_2.setGeometry(QtCore.QRect(160, 124, 121, 30))
+        self.randomStyle_2.setObjectName("randomStyle_2")
+        self.randomStyle_2.setEnabled(False)
 
         self.retranslateUi(iconifier_main)
         QtCore.QMetaObject.connectSlotsByName(iconifier_main)
@@ -76,19 +104,37 @@ class Ui_iconifier_main(object):
         selectedStyle = random.choice(possibleStyles)
         selectedIcon = random.choice(possibleIcons)
         selected = self.styling.currentText()
+        currentText = ""
+        if self.textStyling.currentText() == "Normal":
+            currentText = self.text.text()
+        elif self.textStyling.currentText() == "Lookalike":
+            for letter in self.text.text():
+                try:
+                    currentText = currentText + random.choice(lookalikes.get(letter.lower()))
+                except:
+                    currentText = currentText + letter
+        elif self.textStyling.currentText() == "L33t":
+            for char in self.text.text():
+                if char in leet_dict:
+                    currentText += leet_dict[char]
+                else:
+                    currentText += char
         if not self.randomStyle.isChecked():
             if selected == "(none)":
-                self.result.setText(f"{emojized} {self.text.text()}")
+                if not self.randomIcon.isChecked():
+                    self.result.setText(f"{emojized} {currentText}")
+                else:
+                    self.result.setText(f"{selectedIcon} {currentText}")
             else:
                 if not self.randomIcon.isChecked():
-                    self.result.setText(f"{selected[0]}{emojized}{selected[1]} {self.text.text()}")
+                    self.result.setText(f"{selected[0]}{emojized}{selected[1]} {currentText}")
                 else:
-                    self.result.setText(f"{selected[0]}{selectedIcon}{selected[1]} {self.text.text()}")
+                    self.result.setText(f"{selected[0]}{selectedIcon}{selected[1]} {currentText}")
         else:
             if not self.randomIcon.isChecked():
-                self.result.setText(f"{selectedStyle[0]}{emojized}{selectedStyle[1]} {self.text.text()}")
+                self.result.setText(f"{selectedStyle[0]}{emojized}{selectedStyle[1]} {currentText}")
             else:
-                self.result.setText(f"{selectedStyle[0]}{selectedIcon}{selectedStyle[1]} {self.text.text()}")
+                self.result.setText(f"{selectedStyle[0]}{selectedIcon}{selectedStyle[1]} {currentText}")
 
     def usesRandomStyling(self, checked):
         self.styling.setDisabled(checked)
@@ -124,6 +170,15 @@ class Ui_iconifier_main(object):
         self.randomStyle.setText(_translate("iconifier_main", "Use random styling"))
         self.result.setPlaceholderText(_translate("iconifier_main", "result goes here"))
         self.clear.setText(_translate("iconifier_main", "Clear output"))
+        self.textStyling.setToolTip(_translate("iconifier_main", "Select the type of brackets to use"))
+        self.textStyling.setCurrentText(_translate("iconifier_main", "Normal"))
+        self.textStyling.setItemText(0, _translate("iconifier_main", "Normal"))
+        self.textStyling.setItemText(1, _translate("iconifier_main", "Lookalike"))
+        self.textStyling.setItemText(2, _translate("iconifier_main", "L33t"))
+        self.styleType_label.setText(_translate("iconifier_main", "Style:"))
+        self.textType_label.setText(_translate("iconifier_main", "Text type:"))
+        self.randomStyle_2.setText(_translate("iconifier_main", "Use random text\n"
+"styling (WIP)"))
 
 
 if __name__ == "__main__":
