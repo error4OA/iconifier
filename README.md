@@ -19,7 +19,9 @@ ChatGPT: The other 50% of the program
 
 Programmed Chip: The program's new icon
 
-Current version: 2.2
+Current version: 2.3
+
+sorry if i cant upload folders im too dumb :(
 
 ## Screenshots
 ![New and improved!](https://cdn.discordapp.com/attachments/925820527011045376/1122827617930854500/image.png "New and improved!") ![Now with random styling!](https://cdn.discordapp.com/attachments/925820527011045376/1122831465873416212/image.png "Now with random styling!") ![And now with random icons!](https://media.discordapp.net/attachments/925820527011045376/1123189256920248330/b5447049-08fa-460d-98a1-c893fb3e0e30.png "And now with random icons! (UI rearrangement included!)")
