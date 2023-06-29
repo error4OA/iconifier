@@ -1,6 +1,8 @@
 # Iconifier
 An open-source python-pure program that allows text iconification!
 
+[We now have an official discord server!](https://discord.gg/c2KTVEgxBn)
+
 ## How to use?
 Open the EXE, insert an emoji's name, insert some text and voila!
 
