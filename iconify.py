@@ -36,7 +36,7 @@ def exception_hook(exctype, value, tb):
     sys.__excepthook__(exctype, value, tb)
 
 github_v = requests.get("https://raw.githubusercontent.com/error4OA/iconifier/main/do-not-mess/info.json").json()
-curr_v = "2.4"
+curr_v = "2.5"
 class iconifierWindow(QMainWindow):
     def __init__(self):
         super(iconifierWindow, self).__init__()
