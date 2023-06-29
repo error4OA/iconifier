@@ -1,9 +1,9 @@
 {
  "icon": "cheese_wedge",
  "text": "Cheesehead",
- "style": "(none)",
+ "style": "\u300c\u300d",
  "textStyle": "Normal",
  "useRandomIcon": false,
  "useRandomT_Style": false,
- "useRandomStyle": true
+ "useRandomStyle": false
 }

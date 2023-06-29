@@ -1,12 +1,14 @@
-# i guess i restarted everything cuz i
-# learned a new way to code this app
-from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import Qt
 from PyQt5 import uic
 import emoji
 import clipboard
 import json
 import random
+import sys
+import traceback
+import webbrowser
 import requests
 
 lookalikes = requests.get("https://gist.githubusercontent.com/StevenACoffman/a5f6f682d94e38ed804182dc2693ed4b/raw/fa2ed09ab6f9b515ab430692b588540748412f5f/some_homoglyphs.json").json()
@@ -19,7 +21,22 @@ leet_dict = {
     'X': '><', 'x': '><', 'Y': '`/', 'y': '`/'
 }
 
+def exception_hook(exctype, value, tb):
+    tb_str = ''.join(traceback.format_tb(tb))
 
+    errorbox = QMessageBox()
+    errorbox.setWindowTitle("Error")
+    errorbox.setText("An error ocurred! Click \"See details\" to view what happened. If this wasnt supposed to happen, join our discord.")
+    errorbox.setWindowIcon(QIcon("assets/icon.png"))
+    errorbox.setTextFormat(Qt.RichText)
+    errorbox.setDetailedText("{}".format(tb_str))
+    errorbox.setIcon(QMessageBox.Critical)
+    errorbox.exec_()
+
+    sys.__excepthook__(exctype, value, tb)
+
+github_v = requests.get("https://raw.githubusercontent.com/error4OA/iconifier/main/do-not-mess/info.json").json()
+curr_v = "2.4"
 class iconifierWindow(QMainWindow):
     def __init__(self):
         super(iconifierWindow, self).__init__()
@@ -27,6 +44,17 @@ class iconifierWindow(QMainWindow):
         iconifierWindow.setFixedSize(self, 351, 321)
         iconifierWindow.setWindowIcon(self, QIcon("assets/icon.png"))
         self.show()
+
+        if github_v["CURR_V"] != curr_v:
+            update_warn = QMessageBox()
+            update_warn.setWindowTitle("Update available")
+            update_warn.setText("Hey! A new version was released ({})\nDo you wish to update?".format(github_v["CURR_V"]))
+            update_warn.setWindowIcon(QIcon("assets/icon.png"))
+            update_warn.setIcon(QMessageBox.Warning)
+            update_warn.setStandardButtons(QMessageBox.Yes|QMessageBox.No)
+            result = update_warn.exec_()
+            if result == QMessageBox.Yes:
+                webbrowser.open_new_tab("https://github.com/error4OA/iconifier/releases")
 
         self.generate.clicked.connect(self.iconify)
         self.randomStyle.stateChanged.connect(self.usesRandomStyling)
@@ -36,11 +64,11 @@ class iconifierWindow(QMainWindow):
         self.tabWidget.currentChanged.connect(self.tab_changed)
         self.clear.clicked.connect(self.clearResult)
         self.save.clicked.connect(self.saveF)
-        self.load.clicked.connect(self.loadF)
+        self.load.clicked.connect(self.loadF)        
 
     def saveF(self):
         Fdialog = QFileDialog()
-        Fsave, _ = Fdialog.getSaveFileName(self, "Save settings", "", "JSON file (*.json)")
+        Fsave, _ = Fdialog.getSaveFileName(self, "Save settings", "./presets", "JSON file (*.json)")
 
         if Fsave:
             with open(Fsave, "w") as f:
@@ -57,7 +85,7 @@ class iconifierWindow(QMainWindow):
 
     def loadF(self):
         Fdialog = QFileDialog()
-        Fload, _ = Fdialog.getOpenFileName(self, "Load settings", "", "JSON file (*.json)")
+        Fload, _ = Fdialog.getOpenFileName(self, "Load settings", "./presets", "JSON file (*.json)")
 
         if Fload:
             with open(Fload, "r") as f:
@@ -133,6 +161,7 @@ class iconifierWindow(QMainWindow):
         message_box = QMessageBox()
         message_box.setIcon(QMessageBox.Information)
         message_box.setWindowTitle("Success")
+        message_box.setWindowIcon(QIcon("assets/icon.png"))
         message_box.setText("Copied to clipboard! Made by Cheesehead.")
         message_box.setStandardButtons(QMessageBox.Ok)
         message_box.exec_()
@@ -140,6 +169,7 @@ class iconifierWindow(QMainWindow):
     def clearResult(self):
         self.result.clear()
 
+sys.excepthook = exception_hook
 
 app = QApplication([])
 window = iconifierWindow()
