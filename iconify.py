@@ -29,7 +29,7 @@ def exception_hook(exctype, value, tb):
     errorbox = QMessageBox()
     errorbox.setWindowTitle("Error")
     errorbox.setText("An error ocurred! Click \"See details\" to view what happened. If this wasnt supposed to happen, join our discord.")
-    errorbox.setWindowIcon(QIcon("assets/icon.png"))
+    errorbox.setWindowIcon(QIcon("./assets/icon.png"))
     errorbox.setTextFormat(Qt.RichText)
     errorbox.setDetailedText("{}".format(tb_str))
     errorbox.setIcon(QMessageBox.Critical)
@@ -42,9 +42,9 @@ curr_v = "2.5"
 class iconifierWindow(QMainWindow):
     def __init__(self):
         super(iconifierWindow, self).__init__()
-        uic.loadUi("assets/SOURCE_NEW.ui", self)
+        uic.loadUi("./assets/SOURCE_NEW.ui", self)
         iconifierWindow.setFixedSize(self, 351, 321)
-        iconifierWindow.setWindowIcon(self, QIcon("assets/icon.png"))
+        iconifierWindow.setWindowIcon(self, QIcon("./assets/icon.png"))
         self.show()
 
         settings = QSettings('HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize', QSettings.NativeFormat)
@@ -52,18 +52,18 @@ class iconifierWindow(QMainWindow):
 
         if app_theme == 0:
             app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
-            iconifierWindow.setWindowIcon(self, QIcon("assets/icon_dark.png"))
+            iconifierWindow.setWindowIcon(self, QIcon("./assets/icon_dark.png"))
             self.darkModeEnabled.setChecked(True)
         else:
             app.setStyleSheet("")
-            iconifierWindow.setWindowIcon(self, QIcon("assets/icon.png"))
+            iconifierWindow.setWindowIcon(self, QIcon("./assets/icon.png"))
             self.darkModeEnabled.setChecked(False)
 
         if github_v["CURR_V"] != curr_v:
             update_warn = QMessageBox()
             update_warn.setWindowTitle("Update available")
             update_warn.setText("Hey! A new version was released ({})\nDo you wish to update?".format(github_v["CURR_V"]))
-            update_warn.setWindowIcon(QIcon("assets/icon.png"))
+            update_warn.setWindowIcon(QIcon("./assets/icon.png"))
             update_warn.setIcon(QMessageBox.Warning)
             update_warn.setStandardButtons(QMessageBox.Yes|QMessageBox.No)
             result = update_warn.exec_()
@@ -181,8 +181,9 @@ class iconifierWindow(QMainWindow):
         message_box = QMessageBox()
         message_box.setIcon(QMessageBox.Information)
         message_box.setWindowTitle("Success")
-        message_box.setWindowIcon(QIcon("assets/icon.png"))
+        message_box.setWindowIcon(QIcon("./assets/icon.png"))
         message_box.setText("Copied to clipboard! Made by Cheesehead.")
+        message_box.setTextFormat(Qt.RichText)
         message_box.setStandardButtons(QMessageBox.Ok)
         message_box.exec_()
 
@@ -192,10 +193,10 @@ class iconifierWindow(QMainWindow):
     def toggleDarkMode(self, checked):
         if checked:
             app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
-            iconifierWindow.setWindowIcon(self, QIcon("assets/icon_dark.png"))
+            iconifierWindow.setWindowIcon(self, QIcon("./assets/icon_dark.png"))
         else:
             app.setStyleSheet("")
-            iconifierWindow.setWindowIcon(self, QIcon("assets/icon.png"))
+            iconifierWindow.setWindowIcon(self, QIcon("./assets/icon.png"))
 
     def reloadPresets1(self):
         self.preset_selection.clear()
