@@ -26,6 +26,9 @@
     <property name="currentIndex">
      <number>0</number>
     </property>
+    <property name="tabBarAutoHide">
+     <bool>false</bool>
+    </property>
     <widget class="QWidget" name="main">
      <attribute name="title">
       <string>Main</string>
@@ -36,7 +39,7 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>116</x>
+        <x>110</x>
         <y>10</y>
         <width>118</width>
         <height>21</height>
@@ -91,7 +94,7 @@
      <widget class="QLineEdit" name="text">
       <property name="geometry">
        <rect>
-        <x>116</x>
+        <x>110</x>
         <y>50</y>
         <width>118</width>
         <height>21</height>
@@ -266,7 +269,7 @@ type</string>
       <property name="geometry">
        <rect>
         <x>50</x>
-        <y>160</y>
+        <y>140</y>
         <width>81</width>
         <height>41</height>
        </rect>
@@ -279,7 +282,7 @@ type</string>
       <property name="geometry">
        <rect>
         <x>200</x>
-        <y>160</y>
+        <y>140</y>
         <width>81</width>
         <height>41</height>
        </rect>
@@ -292,13 +295,83 @@ type</string>
       <property name="geometry">
        <rect>
         <x>90</x>
-        <y>30</y>
+        <y>10</y>
         <width>151</width>
         <height>111</height>
        </rect>
       </property>
       <property name="text">
        <string>TextLabel</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="loadPreset">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>250</y>
+        <width>81</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Load preset</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="preset_selection">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>220</y>
+        <width>81</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="editable">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="presetSelLabel">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>200</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Easy loading</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="reloadPresets">
+      <property name="geometry">
+       <rect>
+        <x>80</x>
+        <y>250</y>
+        <width>81</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Reload presets</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="settings">
+     <attribute name="title">
+      <string>Settings</string>
+     </attribute>
+     <widget class="QCheckBox" name="darkModeEnabled">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>91</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Dark mode</string>
       </property>
      </widget>
     </widget>

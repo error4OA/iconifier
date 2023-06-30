@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QMainWindow, QApplication, QFileDialog, QMessageBox
 from PyQt5.QtGui import QIcon
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSettings
 from PyQt5 import uic
 import emoji
 import clipboard
@@ -9,6 +9,8 @@ import random
 import sys
 import traceback
 import webbrowser
+import qdarkstyle
+import os
 import requests
 
 lookalikes = requests.get("https://gist.githubusercontent.com/StevenACoffman/a5f6f682d94e38ed804182dc2693ed4b/raw/fa2ed09ab6f9b515ab430692b588540748412f5f/some_homoglyphs.json").json()
@@ -45,6 +47,18 @@ class iconifierWindow(QMainWindow):
         iconifierWindow.setWindowIcon(self, QIcon("assets/icon.png"))
         self.show()
 
+        settings = QSettings('HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize', QSettings.NativeFormat)
+        app_theme = settings.value('AppsUseLightTheme')
+
+        if app_theme == 0:
+            app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+            iconifierWindow.setWindowIcon(self, QIcon("assets/icon_dark.png"))
+            self.darkModeEnabled.setChecked(True)
+        else:
+            app.setStyleSheet("")
+            iconifierWindow.setWindowIcon(self, QIcon("assets/icon.png"))
+            self.darkModeEnabled.setChecked(False)
+
         if github_v["CURR_V"] != curr_v:
             update_warn = QMessageBox()
             update_warn.setWindowTitle("Update available")
@@ -56,6 +70,8 @@ class iconifierWindow(QMainWindow):
             if result == QMessageBox.Yes:
                 webbrowser.open_new_tab("https://github.com/error4OA/iconifier/releases")
 
+        self.preset_selection.addItems([item.split(".")[0] for item in os.listdir("./presets") if os.path.isfile(f"./presets/{item}") and item.lower().endswith(".json")])
+
         self.generate.clicked.connect(self.iconify)
         self.randomStyle.stateChanged.connect(self.usesRandomStyling)
         self.randomStyle_2.stateChanged.connect(self.usesRandomTextStyling)
@@ -64,7 +80,10 @@ class iconifierWindow(QMainWindow):
         self.tabWidget.currentChanged.connect(self.tab_changed)
         self.clear.clicked.connect(self.clearResult)
         self.save.clicked.connect(self.saveF)
-        self.load.clicked.connect(self.loadF)        
+        self.load.clicked.connect(self.loadF)
+        self.darkModeEnabled.stateChanged.connect(self.toggleDarkMode)
+        self.reloadPresets.clicked.connect(self.reloadPresets1)
+        self.loadPreset.clicked.connect(self.loadPreset1)
 
     def saveF(self):
         Fdialog = QFileDialog()
@@ -90,13 +109,13 @@ class iconifierWindow(QMainWindow):
         if Fload:
             with open(Fload, "r") as f:
                 data = json.load(f)
-                self.text.setText(data["text"])
-                self.emoji.setText(data["icon"])
-                self.styling.setCurrentText(data["style"])
-                self.textStyling.setCurrentText(data["textStyle"])
-                self.randomIcon.setChecked(data["useRandomIcon"])
-                self.randomStyle.setChecked(data["useRandomStyle"])
-                self.randomStyle_2.setChecked(data["useRandomT_Style"])
+            self.text.setText(data["text"])
+            self.emoji.setText(data["icon"])
+            self.styling.setCurrentText(data["style"])
+            self.textStyling.setCurrentText(data["textStyle"])
+            self.randomIcon.setChecked(data["useRandomIcon"])
+            self.randomStyle.setChecked(data["useRandomStyle"])
+            self.randomStyle_2.setChecked(data["useRandomT_Style"])
 
         self.settingsLabel.setText(f"Text: {self.text.text()}\nIcon: {self.emoji.text()}\nUse random icon? {self.randomIcon.isChecked()}\nUse random styling? {self.randomStyle.isChecked()}\nUse random text styling? {self.randomStyle_2.isChecked()}\nStyling: {self.styling.currentText()}\nText styling: {self.textStyling.currentText()}")
 
@@ -111,6 +130,7 @@ class iconifierWindow(QMainWindow):
         selectedStyle = random.choice(possibleStyles)
         selectedIcon = random.choice(possibleIcons)
         selected = self.styling.currentText()
+
         if self.randomStyle_2.isChecked():
             selectedTextStyle = random.choice(["Normal", "L33t", "Lookalike"])
         else:
@@ -168,6 +188,32 @@ class iconifierWindow(QMainWindow):
 
     def clearResult(self):
         self.result.clear()
+
+    def toggleDarkMode(self, checked):
+        if checked:
+            app.setStyleSheet(qdarkstyle.load_stylesheet_pyqt5())
+            iconifierWindow.setWindowIcon(self, QIcon("assets/icon_dark.png"))
+        else:
+            app.setStyleSheet("")
+            iconifierWindow.setWindowIcon(self, QIcon("assets/icon.png"))
+
+    def reloadPresets1(self):
+        self.preset_selection.clear()
+        self.preset_selection.addItems([item.split(".")[0] for item in os.listdir("./presets") if os.path.isfile(f"./presets/{item}") and item.lower().endswith(".json")])
+
+    def loadPreset1(self):
+        with open("./presets/" + self.preset_selection.currentText() + ".json", "r") as f:
+            data = json.load(f)
+        self.text.setText(data["text"])
+        self.emoji.setText(data["icon"])
+        self.styling.setCurrentText(data["style"])
+        self.textStyling.setCurrentText(data["textStyle"])
+        self.randomIcon.setChecked(data["useRandomIcon"])
+        self.randomStyle.setChecked(data["useRandomStyle"])
+        self.randomStyle_2.setChecked(data["useRandomT_Style"])
+
+        self.settingsLabel.setText(f"Text: {self.text.text()}\nIcon: {self.emoji.text()}\nUse random icon? {self.randomIcon.isChecked()}\nUse random styling? {self.randomStyle.isChecked()}\nUse random text styling? {self.randomStyle_2.isChecked()}\nStyling: {self.styling.currentText()}\nText styling: {self.textStyling.currentText()}")
+
 
 sys.excepthook = exception_hook
 
