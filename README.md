@@ -3,7 +3,7 @@ An open-source python-pure program that allows text iconification!
 
 [We now have an official discord server!](https://discord.gg/c2KTVEgxBn)
 
-Having problems executing the app? [Try this alternative!](https://github.com/error4OA/iconifier-console-mode/releases "Iconifier, without GUI")
+Having problems executing the app? [Try this alternative!](https://github.com/error4OA/iconifier-console-mode "Iconifier, without GUI")
 
 ## How to use?
 Open the EXE, insert an emoji's name, insert some text and voila!
