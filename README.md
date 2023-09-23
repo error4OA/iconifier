@@ -12,12 +12,12 @@ Example of usage:
 
 Emoji: `cheese_wedge`
 
-Text: `Cheesehead`
+Text: `podemb`
 
 Styling: Random
 
 ## Extra info
-Cheesehead (me): 50% of the program
+podemb (me): 50% of the program
 
 ChatGPT: The other 50% of the program
 
